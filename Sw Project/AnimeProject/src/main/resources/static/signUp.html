@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signUp</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body class="bg-dark pt-5">
+
+<main class="col-3 m-auto mt-5 pt-5">
+    <div class="container pt-5 ">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+                <!-- Register -->
+                <div class="card ">
+                    <div class="card-body">
+                        <form id="loginForm" action="viewers/login" class="mb-3"  name="form1"  method="post" >
+                            <div class="mb-3">
+                                <label for="name" class="form-label"> Username</label>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Enter username"
+                                        autofocus
+                                        required="required"
+                                        value="" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label"> Email</label>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Enter email"
+                                        autofocus
+                                        required="required"
+                                        value="" />
+                            </div>
+                            <div class="mb-3 form-password-toggle">
+                                <label class="form-label" for="password">Password</label>
+                                <input
+                                        type="password"
+                                        minlength="8"
+                                        maxlength="20"
+                                        id="password"
+                                        class="form-control"
+                                        name="password"
+                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                        aria-describedby="password"
+                                        required="required"
+                                        value=""
+
+                                />
+                            </div>
+
+                            <div class="form-check">
+
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-success d-grid w-100" type="submit" id="submit" name="submit" >sign Up</button>
+                            </div>
+                        </form>
+                        <div id="respose"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<script src="js/bootstrap.min.js"></script>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event){
+        event.preventDefault()
+        const name = document.getElementById("name").value
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
+        const response = await fetch('http://localhost:9090/viewers/signup',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                name:name,
+                email: email,
+                password: password
+            })
+        });
+        const data = await response.json()
+        document.getElementById('response').innerText= JSON.stringify(data)
+
+        if (response.ok) {
+            window.location.href = "login.html";
+        }
+    });
+</script>
+
+</body>
+
+</html>
